@@ -1,0 +1,23 @@
+[package]
+name = "interval_tree"
+version = "0.1.0"
+authors = ["coco <coco@hexgolems.com>"]
+
+description = "A simple Interval Tree implementation"
+
+# These URLs point to more information about the repository
+#documentation = "..."
+homepage = "https://github.com/ranmrdrakono/interval_tree"
+#repository = "..."
+
+keywords = ["datastructure","interval", "tree", "map"]
+
+# This is a string description of the license for this package. Currently
+# crates.io will validate the license provided against a whitelist of known
+# license identifiers from http://spdx.org/licenses/. Multiple licenses can
+# be separated with a `/`
+license = "GPL-2.0"
+
+[dependencies]
+rand = "*" # Or a specific version
+time = "*"
