@@ -143,3 +143,13 @@ fn test_range_iter(){
     }
 
 }
+
+#[test]
+fn test_range_iter_non_pointwise(){
+    let mut t = interval_tree::IntervalTree::<i32>::new();
+    t.insert(Range::new(3,8),1337);
+    t.insert(Range::new(6,10),1338);
+    t.insert(Range::new(12,36),1339);
+    t.insert(Range::new(32,40),1340);
+    assert_eq!(t.range(9,10).map(|(k,_)| k).collect(), vec![6,12])
+}
