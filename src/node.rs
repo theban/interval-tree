@@ -40,6 +40,10 @@ fn height<D>(node: &Option<Box<Node<D>>>) -> u32  {
     return node.as_ref().map_or(0, |succ| succ.height)
 }
 
+fn subtree_max<D>(node: &Option<Box<Node<D>>>) -> u64 {
+    return node.as_ref().map_or(0, |succ| succ.max)
+}
+
 /// Perform a single right rotation on this (sub) tree
 fn rotate_right<D>(mut root: Box<Node<D>>) -> Box<Node<D>>{
     let mut new_root_box = root.left.take().expect("Avl broken");
@@ -110,6 +114,7 @@ fn rotate_if_necessary<D>(root: Box<Node<D>>) -> Box<Node<D>> {
 /// both children of root ar up to date.
 fn update_height<D>(root: &mut Node<D>){
     root.height = cmp::max( height(&root.left), height(&root.right) )+1;
+    root.max = cmp::max(subtree_max(&root.left), cmp::max(subtree_max(&root.right), root.key.max));
 }
 
 /// recursively insert the (key,data) pair into the given optional succesor and return its new
@@ -273,7 +278,8 @@ fn is_sorted_right<D>(node: &Box<Node<D>>) -> bool {
 fn is_interval_node<D>(node: &Box<Node<D>>) -> bool {
     let sorted = is_sorted_left(node) && is_sorted_right(node);
     let balanced = node.height == cmp::max(height(&node.left),height(&node.right))+1;
-    return sorted && balanced;
+    let proper_max = node.max == cmp::max(subtree_max(&node.left), cmp::max(subtree_max(&node.right), node.key.max));
+    return sorted && balanced && proper_max;
 }
 
 pub fn is_interval_tree<D>(root: &Option<Box<Node<D>>>) -> bool {
