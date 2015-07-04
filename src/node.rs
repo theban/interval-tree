@@ -9,7 +9,12 @@ pub struct Range{
 
 impl Range {
     pub fn new(min: u64, max: u64) -> Range{
+        assert!(min <= max);
         return Range{min: min, max: max}
+    }
+
+    pub fn intersect(&self, other: &Range) -> bool{
+        cmp::max(self.min,other.min) <= cmp::min(self.max,other.max)
     }
 }
 
@@ -22,23 +27,32 @@ impl Ord for Range {
 }
 
 pub struct Node<D> {
-    key: Range,
-    data: D,
+    pub key: Range,
+    pub data: D,
     height: u32,
     max: u64,
-    left: Option<Box<Node<D>>>,
-    right:Option<Box<Node<D>>>,
+    pub left: Option<Box<Node<D>>>,
+    pub right:Option<Box<Node<D>>>,
 }
 
 impl<D> Node<D> {
     pub fn new(key: Range, data: D) -> Node<D>{
         Node::<D>{key: key, data: data, height: 1, max: key.max, left: None, right: None}
     }
+
+    pub fn right_subtree_relevant(&self, range: &Range) -> bool{
+        return range.max >= self.key.min
+    }
+
+    pub fn left_subtree_relevant(&self, range: &Range) -> bool{
+        return self.max >= range.min
+    }
 }
 
-fn height<D>(node: &Option<Box<Node<D>>>) -> u32  {
+pub fn height<D>(node: &Option<Box<Node<D>>>) -> u32  {
     return node.as_ref().map_or(0, |succ| succ.height)
 }
+
 
 fn subtree_max<D>(node: &Option<Box<Node<D>>>) -> u64 {
     return node.as_ref().map_or(0, |succ| succ.max)

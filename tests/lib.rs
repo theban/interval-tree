@@ -4,6 +4,8 @@ extern crate time;
 
 use time::PreciseTime;
 use interval_tree::Range;
+use std::cmp;
+use std::collections::BTreeSet;
 
 #[test]
 fn test_getters(){
@@ -151,5 +153,42 @@ fn test_range_iter_non_pointwise(){
     t.insert(Range::new(6,10),1338);
     t.insert(Range::new(12,36),1339);
     t.insert(Range::new(32,40),1340);
-    assert_eq!(t.range(9,10).map(|(&k,&v)| k.min).collect::<Vec<u64>>(), vec![6,12])
+    assert_eq!(t.range(9,14).map(|(&k,&v)| k.min).collect::<Vec<u64>>(), vec![6,12])
+}
+
+fn random_range() -> Range {
+    let offset = rand::random::<u64>();
+    let len: u64;
+    if rand::random::<bool>() {
+        len = cmp::min(rand::random::<u64>()%500, 0xff_ff_ff_ff_ff_ff_ff_ff - offset)
+    } else {
+        len = rand::random::<u64>()%(0xff_ff_ff_ff_ff_ff_ff_ff - offset)
+    }
+
+    return Range::new(offset, offset+len)
+}
+
+#[test]
+fn test_range_iter_nontrivial(){
+    let mut set = BTreeSet::<Range>::new();
+    let mut t = interval_tree::IntervalTree::<i32>::new();
+    for _ in 1..5000 {
+        let decision = rand::random::<bool>();
+        let range = random_range();
+        if  decision {
+            set.insert(range);
+            t.insert(range, 1337);
+            assert!(t.contains(range));
+            //assert!(t.test_interval_tree());
+        } else {
+            set.remove(&range);
+            t.delete(range);
+            assert!(!t.contains(range));
+            //assert!(t.test_interval_tree());
+        };
+    let query = random_range();
+    let should = set.iter().filter(|&r| query.intersect(r)).collect::<Vec<&Range>>();
+    let is = t.range(query.min, query.max).map(|(r,_)| r).collect::<Vec<&Range>>();
+    assert_eq!(should, is);
+    };
 }

@@ -3,7 +3,7 @@ extern crate test;
 
 use node::Node;
 use node::Range;
-use node::{insert,delete,search,min,max,is_interval_tree, min_pair, max_pair};
+use node::{insert,delete,search,min,max,is_interval_tree, min_pair, max_pair, height};
 use iterators::RangePairIter;
 use std::collections::Bound;
 
@@ -13,6 +13,7 @@ pub struct IntervalTree<D> {
 }
 
 impl <D> IntervalTree<D>{
+
 
 /// This function will construct a new empty IntervalTree.
 /// # Examples
@@ -159,6 +160,21 @@ impl <D> IntervalTree<D>{
             Some(ref root) => Some(max_pair(root)),
             None => None
         }
+    }
+
+/// This function will return the hieght of the tree. An empty tree hash height 0, one with only
+/// one elemente has height 1 etc.
+/// # Examples
+/// ```
+/// use interval_tree::Range;
+/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// assert_eq!(t.height(), 0);
+/// t.insert(Range::new(2,2),3);
+/// assert_eq!(t.height(), 1);
+///
+/// ```
+    pub fn height(&self) -> usize {
+        height(&self.root) as usize
     }
 
 /// This function will return a read only iterator for all (key,value) pairs in the tree.
