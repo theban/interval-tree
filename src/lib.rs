@@ -9,3 +9,4 @@ pub use node::Range;
 pub mod tree;
 mod iterators;
 pub use tree::IntervalTree;
+pub use iterators::RangePairIter;
