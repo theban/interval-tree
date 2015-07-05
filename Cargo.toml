@@ -7,7 +7,7 @@ description = "A simple Interval Tree implementation"
 
 # These URLs point to more information about the repository
 #documentation = "..."
-homepage = "https://github.com/ranmrdrakono/interval_tree"
+#homepage = "https://github.com/ranmrdrakono/interval_tree"
 #repository = "..."
 
 keywords = ["datastructure","interval", "tree", "map"]

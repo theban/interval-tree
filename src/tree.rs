@@ -210,22 +210,26 @@ impl <D> IntervalTree<D>{
     }
 }
 
+fn random_range() -> Range {
+    let offset = rand::random::<u64>()%50;
+    let len: u64;
+    len = rand::random::<u64>()%50;
+    return Range::new(offset, offset+len)
+}
+
 #[test]
 fn test_fuzz(){
     let mut t = IntervalTree::<i32>::new();
     for _ in 1..5000 {
         let decision = rand::random::<bool>();
+        let range = random_range();
         if  decision {
-            let rnd = rand::random::<u64>()%500;
-            let to_insert = Range::new(rnd,rnd);
-            t.insert(to_insert, 1337);
-            assert!(t.contains(to_insert));
+            t.insert(range, 1337);
+            assert!(t.contains(range));
             assert!(t.test_interval_tree());
         } else {
-            let rnd = rand::random::<u64>()%500;
-            let to_delete = Range::new(rnd, rnd);
-            t.delete(to_delete);
-            assert!(!t.contains(to_delete));
+            t.delete(range);
+            assert!(!t.contains(range));
             assert!(t.test_interval_tree());
         };
     };
