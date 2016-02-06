@@ -15,6 +15,7 @@ pub struct RangePairIter<'a,D:'a> {
     stack: Vec<(&'a Node<D>, VisitingState)>
 }
 
+
 impl<'a, D:'a> RangePairIter<'a, D> {
 
     pub fn new(tree: &'a tree::IntervalTree<D>, lower: u64, upper: u64) -> RangePairIter<'a,D>{

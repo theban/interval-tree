@@ -1,7 +1,7 @@
 use std::cmp;
 use std::cmp::Ordering;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd )]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Hash)]
 pub struct Range{
     pub min: u64,
     pub max: u64
