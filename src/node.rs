@@ -16,6 +16,10 @@ impl Range {
     pub fn intersect(&self, other: &Range) -> bool{
         cmp::max(self.min,other.min) <= cmp::min(self.max,other.max)
     }
+
+    pub fn len(&self) -> u64{
+        return self.max-self.min
+    }
 }
 
 impl Ord for Range {
