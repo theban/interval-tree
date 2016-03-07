@@ -1,6 +1,6 @@
 [package]
 name = "interval_tree"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple Interval Tree implementation"

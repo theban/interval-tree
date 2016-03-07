@@ -30,6 +30,7 @@ impl Ord for Range {
     }
 }
 
+#[derive(Debug)]
 pub struct Node<D> {
     pub key: Range,
     pub data: D,
