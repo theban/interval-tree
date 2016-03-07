@@ -17,6 +17,10 @@ impl Range {
         cmp::max(self.min,other.min) <= cmp::min(self.max,other.max)
     }
 
+    pub fn get_intersection(&self, other: &Range) -> Range{
+        return Range::new(cmp::max(self.min, other.min), cmp::min(self.max, other.max));
+    }
+
     pub fn len(&self) -> u64{
         return self.max-self.min
     }
@@ -303,6 +307,11 @@ fn is_interval_node<D>(node: &Box<Node<D>>) -> bool {
 
 pub fn is_interval_tree<D>(root: &Option<Box<Node<D>>>) -> bool {
     (*root).as_ref().map_or(true, is_interval_node)
+}
+
+#[test]
+fn range_intersection() {
+    assert_eq!((&Range::new(3,10)).get_intersection(&Range::new(5,17)), Range::new(5,10) );
 }
 
 #[test]
