@@ -8,6 +8,7 @@ use iterators::RangePairIter;
 use std::collections::Bound;
 
 
+#[derive(Debug)]
 pub struct IntervalTree<D> {
     pub root: Option<Box<Node<D>>>
 }
