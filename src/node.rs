@@ -21,6 +21,10 @@ impl Range {
         return Range::new(cmp::max(self.min, other.min), cmp::min(self.max, other.max));
     }
 
+    pub fn get_union(&self, other: &Range) -> Range{
+        return Range::new(cmp::min(self.min, other.min), cmp::max(self.max, other.max));
+    }
+
     pub fn len(&self) -> u64{
         return self.max-self.min+1
     }
@@ -310,10 +314,11 @@ pub fn is_interval_tree<D>(root: &Option<Box<Node<D>>>) -> bool {
 }
 
 #[test]
-fn range_intersection() {
+fn range_impl() {
     assert_eq!((&Range::new(3,10)).get_intersection(&Range::new(5,17)), Range::new(5,10) );
     //Range 2,3 has the semantics: bytes 2 and 3
     assert_eq!(Range::new(2,3).len(), 2);
+    assert_eq!(Range::new(2,3).get_union(&Range::new(5,6)), Range::new(2,6));
 }
 
 #[test]
