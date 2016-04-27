@@ -206,8 +206,8 @@ impl <D> IntervalTree<D>{
         RangePairIter::new(self, 0, 0xffff_ffff_ffff_ffff)
     }
 
-/// This function will return a read only iterator for all (key,value) pairs between the two bounds (which can
-/// be inclusive, exclusive or unbounded).
+/// This function will return a read only iterator for all (key,value) pairs between the two
+/// bounds.
 /// # Examples
 /// ```
 /// //[...]
