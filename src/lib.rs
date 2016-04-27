@@ -1,10 +1,9 @@
 #![crate_type = "lib"]
 #![feature(test)]
-#![feature(collections_bound)]
-
 
 mod node;
-pub use node::Range;
+mod range;
+pub use range::Range;
 pub mod tree;
 mod iterators;
 pub use tree::IntervalTree;

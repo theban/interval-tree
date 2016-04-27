@@ -2,11 +2,9 @@ extern crate rand;
 extern crate test;
 
 use node::Node;
-use node::Range;
-use node::{insert,delete,search,min,max,is_interval_tree, min_pair, max_pair, height};
+use range::Range;
+use node::{insert,delete,search,min_pair, max_pair, height};
 use iterators::RangePairIter;
-use std::collections::Bound;
-
 
 #[derive(Debug)]
 pub struct IntervalTree<D> {
@@ -206,33 +204,38 @@ impl <D> IntervalTree<D>{
         RangePairIter::new(self, min, max)
     }
 
-    fn test_interval_tree(&self) -> bool {
-        is_interval_tree(&self.root)
+}
+
+#[cfg(test)]
+mod tests{
+
+    extern crate rand;
+    extern crate test;
+    use node::is_interval_tree;
+
+    fn random_range() -> ::Range {
+        let offset = rand::random::<u64>()%50;
+        let len: u64;
+        len = rand::random::<u64>()%50;
+        return ::Range::new(offset, offset+len)
     }
-}
 
-fn random_range() -> Range {
-    let offset = rand::random::<u64>()%50;
-    let len: u64;
-    len = rand::random::<u64>()%50;
-    return Range::new(offset, offset+len)
-}
-
-#[test]
-fn test_fuzz(){
-    let mut t = IntervalTree::<i32>::new();
-    for _ in 1..5000 {
-        let decision = rand::random::<bool>();
-        let range = random_range();
-        if  decision {
-            t.insert(range, 1337);
-            assert!(t.contains(range));
-            assert!(t.test_interval_tree());
-        } else {
-            t.delete(range);
-            assert!(!t.contains(range));
-            assert!(t.test_interval_tree());
+    #[test]
+    fn test_fuzz(){
+        let mut t = ::IntervalTree::<i32>::new();
+        for _ in 1..5000 {
+            let decision = rand::random::<bool>();
+            let range = random_range();
+            if  decision {
+                t.insert(range, 1337);
+                assert!(t.contains(range));
+                assert!(is_interval_tree(&t.root));
+            } else {
+                t.delete(range);
+                assert!(!t.contains(range));
+                assert!(is_interval_tree(&t.root));
+            };
         };
-    };
-    return;
+        return;
+    }
 }

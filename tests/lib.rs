@@ -153,7 +153,7 @@ fn test_range_iter_non_pointwise(){
     t.insert(Range::new(6,10),1338);
     t.insert(Range::new(12,36),1339);
     t.insert(Range::new(32,40),1340);
-    assert_eq!(t.range(9,14).map(|(&k,&v)| k.min).collect::<Vec<u64>>(), vec![6,12])
+    assert_eq!(t.range(9,14).map(|(&k,_)| k.min).collect::<Vec<u64>>(), vec![6,12])
 }
 
 fn random_range() -> Range {

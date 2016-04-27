@@ -1,42 +1,6 @@
 use std::cmp;
 use std::cmp::Ordering;
-
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Hash)]
-pub struct Range{
-    pub min: u64,
-    pub max: u64
-}
-
-impl Range {
-    pub fn new(min: u64, max: u64) -> Range{
-        assert!(min <= max);
-        return Range{min: min, max: max}
-    }
-
-    pub fn intersect(&self, other: &Range) -> bool{
-        cmp::max(self.min,other.min) <= cmp::min(self.max,other.max)
-    }
-
-    pub fn get_intersection(&self, other: &Range) -> Range{
-        return Range::new(cmp::max(self.min, other.min), cmp::min(self.max, other.max));
-    }
-
-    pub fn get_union(&self, other: &Range) -> Range{
-        return Range::new(cmp::min(self.min, other.min), cmp::max(self.max, other.max));
-    }
-
-    pub fn len(&self) -> u64{
-        return self.max-self.min+1
-    }
-}
-
-impl Ord for Range {
-    fn cmp(&self, other: &Self) -> Ordering {
-        let first_cmp = self.min.cmp(&other.min);
-        if first_cmp == Ordering::Equal { return self.max.cmp(&other.max) }
-        return first_cmp
-    }
-}
+use ::range::Range;
 
 #[derive(Debug)]
 pub struct Node<D> {
@@ -182,12 +146,14 @@ pub fn search_pair<'a,D>(key: &Range, root: &'a Box<Node<D>>) -> Option<(&'a Ran
 
 
 /// returns true iff key is stored in the tree given by root
-fn contains<D>(key: &Range, root: &Box<Node<D>> ) -> bool  {
+#[cfg(test)]
+pub fn contains<D>(key: &Range, root: &Box<Node<D>> ) -> bool  {
     search(key,root).is_some()
 }
 
 
 ///returns the smallest key and value after the given key.
+#[cfg(test)]
 pub fn min_after<'a,D>(key: &Range, root: &'a Box<Node<D>>) -> Option<(&'a Range,&'a D)> {
     match root.key.cmp(key){
         Ordering::Equal =>  root.right.as_ref().map_or(None, |succ| Some(min_pair(succ))),
@@ -212,11 +178,13 @@ pub fn max_pair<D>(root: &Box<Node<D>>) -> (&Range,&D) {
 }
 
 ///returns the minimal value within this tree
+#[cfg(test)]
 pub fn min<D>(root: &Box<Node<D>>) -> &D {
     root.left.as_ref().map_or(&root.data, min)
 }
 
 ///returns the minimal value within this tree
+#[cfg(test)]
 pub fn max<D>(root: &Box<Node<D>>) -> &D {
     root.right.as_ref().map_or(&root.data, max)
 }
@@ -286,6 +254,8 @@ pub fn delete<D>(key: Range, mut root: Box<Node<D>>) -> Option<Box<Node<D>>>{
     return Some(root);
 }
 
+
+#[cfg(test)]
 fn simple_tree(size: i32) -> Box<Node<i32>> {
     let mut t = Box::new(Node::<i32>{key: Range::new(1,1), data: 1337, height: 0, max: 1, left:None, right: None});
     for x in 2..size+1 {
@@ -293,15 +263,15 @@ fn simple_tree(size: i32) -> Box<Node<i32>> {
     }
     t
 }
-
+#[cfg(test)]
 fn is_sorted_left<D>(node: &Box<Node<D>>) -> bool {
     node.left.as_ref().map_or(true, |succ| succ.key < node.key)
 }
-
+#[cfg(test)]
 fn is_sorted_right<D>(node: &Box<Node<D>>) -> bool {
     node.right.as_ref().map_or(true, |succ| succ.key > node.key)
 }
-
+#[cfg(test)]
 fn is_interval_node<D>(node: &Box<Node<D>>) -> bool {
     let sorted = is_sorted_left(node) && is_sorted_right(node);
     let balanced = node.height == cmp::max(height(&node.left),height(&node.right))+1;
@@ -309,6 +279,7 @@ fn is_interval_node<D>(node: &Box<Node<D>>) -> bool {
     return sorted && balanced && proper_max;
 }
 
+#[cfg(test)]
 pub fn is_interval_tree<D>(root: &Option<Box<Node<D>>>) -> bool {
     (*root).as_ref().map_or(true, is_interval_node)
 }
@@ -413,7 +384,7 @@ fn test_delete(){
 
 #[test] 
 fn test_min_max() {
-    let mut t = simple_tree(50);
+    let t = simple_tree(50);
     assert_eq!(min(&t),&1337);
     assert_eq!(max(&t),&(1337+50-1));
     assert_eq!(max_pair(&t).0,&Range::new(50,50));

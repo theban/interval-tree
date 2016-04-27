@@ -1,6 +1,5 @@
 use ::tree;
-use ::node;
-use ::node::Range;
+use ::range::Range;
 use ::node::Node;
 
 enum VisitingState {
@@ -10,7 +9,7 @@ enum VisitingState {
 }
 
 pub struct RangePairIter<'a,D:'a> {
-    tree: &'a tree::IntervalTree<D>,
+    //tree: &'a tree::IntervalTree<D>,
     range: Range,
     stack: Vec<(&'a Node<D>, VisitingState)>
 }
@@ -23,7 +22,8 @@ impl<'a, D:'a> RangePairIter<'a, D> {
         if let Some(ref root) = tree.root {
             stack.push( (&**root,VisitingState::VisitLeft) );
         }
-        RangePairIter{tree: tree, range: Range::new(lower,upper), stack: stack}
+        //RangePairIter{tree: tree, range: Range::new(lower,upper), stack: stack}
+        RangePairIter{ range: Range::new(lower,upper), stack: stack}
     }
 
     pub fn visit_left(&mut self, node: &'a Node<D>) {
@@ -87,8 +87,8 @@ fn test_iterators(){
     tree.insert(Range::new(10,10), 1321);
     tree.insert(Range::new(1 ,1), 1321);
     tree.insert(Range::new(3 ,3), 1322);
-    let init_key = Range::new(0,0);
-    let mut iter = RangePairIter::new(&tree, 0, 1000);
+
+    let iter = RangePairIter::new(&tree, 0, 1000);
 
     for (k,v) in iter {
         println!("{:?} {}",k,v);
