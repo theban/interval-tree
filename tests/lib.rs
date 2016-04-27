@@ -1,9 +1,10 @@
 extern crate interval_tree;
 extern crate rand;
 extern crate time;
+extern crate memrange;
 
 use time::PreciseTime;
-use interval_tree::Range;
+use memrange::Range;
 use std::cmp;
 use std::collections::BTreeSet;
 

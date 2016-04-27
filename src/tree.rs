@@ -1,8 +1,9 @@
 extern crate rand;
 extern crate test;
+extern crate memrange;
 
 use node::Node;
-use range::Range;
+use self::memrange::Range;
 use node::{insert,delete,search,min_pair, max_pair, height};
 use iterators::RangePairIter;
 
@@ -28,13 +29,14 @@ impl <D> IntervalTree<D>{
 /// part of the tree.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
 /// 
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// assert_eq!(t.get(Range::new(2,2)), Some(&25));
-/// t.insert(Range::new(2,2),30);
-/// assert_eq!(t.get(Range::new(2,2)), Some(&30));
+/// t.insert(memrange::Range::new(2,2),25);
+/// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&25));
+/// t.insert(memrange::Range::new(2,2),30);
+/// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&30));
 /// ```
     pub fn insert(&mut self, key: Range, data: D) {
         match self.root.take() {
@@ -47,14 +49,15 @@ impl <D> IntervalTree<D>{
 /// part of the tree.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
 ///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// t.delete(Range::new(2,2));
+/// t.insert(memrange::Range::new(2,2),25);
+/// t.delete(memrange::Range::new(2,2));
 /// assert!(t.empty());
 /// // deleting nonexistant keys doesn't do anything
-/// t.delete(Range::new(3,3)); 
+/// t.delete(memrange::Range::new(3,3)); 
 /// assert!(t.empty());
 /// ```
     pub fn delete(&mut self, key: Range){
@@ -68,11 +71,13 @@ impl <D> IntervalTree<D>{
 /// known.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// assert_eq!(t.get(Range::new(2,2)), Some(&25));
-/// assert_eq!(t.get(Range::new(3,3)), None);
+/// t.insert(memrange::Range::new(2,2),25);
+/// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&25));
+/// assert_eq!(t.get(memrange::Range::new(3,3)), None);
 ///
 /// ```
     pub fn get(&self, key: Range) -> Option<&D>{
@@ -86,11 +91,13 @@ impl <D> IntervalTree<D>{
 /// known.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// assert_eq!(t.get_or(Range::new(2,2),&2000), &25);
-/// assert_eq!(t.get_or(Range::new(3,3),&2000), &2000);
+/// t.insert(memrange::Range::new(2,2),25);
+/// assert_eq!(t.get_or(memrange::Range::new(2,2),&2000), &25);
+/// assert_eq!(t.get_or(memrange::Range::new(3,3),&2000), &2000);
 ///
 /// ```
     pub fn get_or<'a>(&'a self, key: Range, default: &'a D) -> &D{
@@ -100,11 +107,13 @@ impl <D> IntervalTree<D>{
 /// This function will return true if the tree contains the given key, false otherwise
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// assert!(!t.contains(Range::new(3,3)));
-/// assert!(t.contains(Range::new(2,2)));
+/// t.insert(memrange::Range::new(2,2),25);
+/// assert!(!t.contains(memrange::Range::new(3,3)));
+/// assert!(t.contains(memrange::Range::new(2,2)));
 ///
 /// ```
     pub fn contains(&self, key: Range) -> bool {
@@ -114,10 +123,12 @@ impl <D> IntervalTree<D>{
 /// This function will return true if the tree is empty, false otherwise.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+/// 
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
 /// assert!(t.empty());
-/// t.insert(Range::new(2,2),25);
+/// t.insert(memrange::Range::new(2,2),25);
 /// assert!(!t.empty());
 ///
 /// ```
@@ -127,11 +138,13 @@ impl <D> IntervalTree<D>{
 /// tree is empty.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+/// 
 /// let mut t=interval_tree::IntervalTree::<u64>::new();
-/// t.insert(Range::new(2,2),25);
-/// t.insert(Range::new(3,3),50);
-/// assert_eq!(t.min().unwrap().0, &Range::new(2,2));
+/// t.insert(memrange::Range::new(2,2),25);
+/// t.insert(memrange::Range::new(3,3),50);
+/// assert_eq!(t.min().unwrap().0, &memrange::Range::new(2,2));
 /// assert_eq!(t.min().unwrap().1, &25);
 ///
 /// ```
@@ -146,11 +159,13 @@ impl <D> IntervalTree<D>{
 /// tree is empty.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
-/// t.insert(Range::new(2,2),25);
-/// t.insert(Range::new(3,3),50);
-/// assert_eq!(t.max().unwrap().0, &Range::new(3,3));
+/// t.insert(memrange::Range::new(2,2),25);
+/// t.insert(memrange::Range::new(3,3),50);
+/// assert_eq!(t.max().unwrap().0, &memrange::Range::new(3,3));
 /// assert_eq!(t.max().unwrap().1, &50);
 ///
 /// ```
@@ -165,10 +180,12 @@ impl <D> IntervalTree<D>{
 /// one elemente has height 1 etc.
 /// # Examples
 /// ```
-/// use interval_tree::Range;
+/// extern crate memrange;
+/// extern crate interval_tree;
+///
 /// let mut t=interval_tree::IntervalTree::<i32>::new();
 /// assert_eq!(t.height(), 0);
-/// t.insert(Range::new(2,2),3);
+/// t.insert(memrange::Range::new(2,2),3);
 /// assert_eq!(t.height(), 1);
 ///
 /// ```
@@ -211,13 +228,14 @@ mod tests{
 
     extern crate rand;
     extern crate test;
+    extern crate memrange;
     use node::is_interval_tree;
 
-    fn random_range() -> ::Range {
+    fn random_range() -> memrange::Range {
         let offset = rand::random::<u64>()%50;
         let len: u64;
         len = rand::random::<u64>()%50;
-        return ::Range::new(offset, offset+len)
+        return memrange::Range::new(offset, offset+len)
     }
 
     #[test]

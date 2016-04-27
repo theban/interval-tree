@@ -1,5 +1,7 @@
+extern crate memrange;
+
 use ::tree;
-use ::range::Range;
+use self::memrange::Range;
 use ::node::Node;
 
 enum VisitingState {

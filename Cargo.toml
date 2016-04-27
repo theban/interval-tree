@@ -21,3 +21,7 @@ license = "GPL-2.0"
 [dependencies]
 rand = "*" # Or a specific version
 time = "*"
+
+[dependencies.memrange]
+#git = "https://github.com/theban/memrange"
+path = "../memrange"

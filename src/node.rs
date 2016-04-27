@@ -1,6 +1,7 @@
+extern crate memrange;
 use std::cmp;
 use std::cmp::Ordering;
-use ::range::Range;
+use self::memrange::Range;
 
 #[derive(Debug)]
 pub struct Node<D> {
