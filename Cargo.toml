@@ -23,5 +23,5 @@ rand = "*" # Or a specific version
 time = "*"
 
 [dependencies.memrange]
-#git = "https://github.com/theban/memrange"
-path = "../memrange"
+git = "https://github.com/theban/memrange"
+#path = "../memrange"
