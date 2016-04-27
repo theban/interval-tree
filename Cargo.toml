@@ -1,14 +1,14 @@
 [package]
-name = "interval_tree"
-version = "0.6.0"
+name = "theban-interval-tree"
+version = "0.6.1"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple Interval Tree implementation"
 
 # These URLs point to more information about the repository
 #documentation = "..."
-#homepage = "https://github.com/ranmrdrakono/interval_tree"
-#repository = "..."
+repository = "https://github.com/theban/interval-tree"
+#homepage = "..."
 
 keywords = ["datastructure","interval", "tree", "map"]
 
@@ -21,7 +21,8 @@ license = "GPL-2.0"
 [dependencies]
 rand = "*" # Or a specific version
 time = "*"
+memrange = "*"
 
-[dependencies.memrange]
-git = "https://github.com/theban/memrange"
+#[dependencies.memrange]
+#git = "https://github.com/theban/memrange"
 #path = "../memrange"
