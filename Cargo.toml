@@ -12,11 +12,7 @@ repository = "https://github.com/theban/interval-tree"
 
 keywords = ["datastructure","interval", "tree", "map"]
 
-# This is a string description of the license for this package. Currently
-# crates.io will validate the license provided against a whitelist of known
-# license identifiers from http://spdx.org/licenses/. Multiple licenses can
-# be separated with a `/`
-license = "GPL-2.0"
+license-file = "LICENSE"
 
 [dependencies]
 rand = "*" # Or a specific version
