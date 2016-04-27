@@ -18,8 +18,8 @@ impl <D> IntervalTree<D>{
 /// This function will construct a new empty IntervalTree.
 /// # Examples
 /// ```
-/// extern crate interval_tree;
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// extern crate theban_interval_tree;
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// ```
     pub fn new() -> IntervalTree<D>{
         IntervalTree{root: None}
@@ -30,9 +30,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 /// 
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&25));
 /// t.insert(memrange::Range::new(2,2),30);
@@ -50,9 +50,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// t.delete(memrange::Range::new(2,2));
 /// assert!(t.empty());
@@ -72,9 +72,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&25));
 /// assert_eq!(t.get(memrange::Range::new(3,3)), None);
@@ -92,9 +92,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert_eq!(t.get_or(memrange::Range::new(2,2),&2000), &25);
 /// assert_eq!(t.get_or(memrange::Range::new(3,3),&2000), &2000);
@@ -108,9 +108,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert!(!t.contains(memrange::Range::new(3,3)));
 /// assert!(t.contains(memrange::Range::new(2,2)));
@@ -124,9 +124,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 /// 
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// assert!(t.empty());
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert!(!t.empty());
@@ -139,9 +139,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 /// 
-/// let mut t=interval_tree::IntervalTree::<u64>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<u64>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// t.insert(memrange::Range::new(3,3),50);
 /// assert_eq!(t.min().unwrap().0, &memrange::Range::new(2,2));
@@ -160,9 +160,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// t.insert(memrange::Range::new(3,3),50);
 /// assert_eq!(t.max().unwrap().0, &memrange::Range::new(3,3));
@@ -181,9 +181,9 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// extern crate memrange;
-/// extern crate interval_tree;
+/// extern crate theban_interval_tree;
 ///
-/// let mut t=interval_tree::IntervalTree::<i32>::new();
+/// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// assert_eq!(t.height(), 0);
 /// t.insert(memrange::Range::new(2,2),3);
 /// assert_eq!(t.height(), 1);
@@ -196,7 +196,7 @@ impl <D> IntervalTree<D>{
 /// This function will return a read only iterator for all (key,value) pairs in the tree.
 /// # Examples
 /// ```
-/// # let mut t=interval_tree::IntervalTree::<i32>::new();
+/// # let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// for (key,val) in t.iter() {
 ///     println!("{:?} -> {}",key,val)
 /// }
@@ -211,7 +211,7 @@ impl <D> IntervalTree<D>{
 /// # Examples
 /// ```
 /// //[...]
-/// # let mut t=interval_tree::IntervalTree::<i32>::new();
+/// # let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// for (key,val) in t.range(9, 100) {
 ///     println!("{:?} -> {}",key,val)
 /// }

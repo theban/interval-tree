@@ -1,6 +1,6 @@
 [package]
-name = "theban-interval-tree"
-version = "0.6.1"
+name = "theban_interval_tree"
+version = "0.6.2"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple Interval Tree implementation"
@@ -15,9 +15,9 @@ keywords = ["datastructure","interval", "tree", "map"]
 license-file = "LICENSE"
 
 [dependencies]
-rand = "*" # Or a specific version
-time = "*"
-memrange = "*"
+rand = "0.3.*" # Or a specific version
+time = "0.1.*"
+memrange = "0.1.*"
 
 #[dependencies.memrange]
 #git = "https://github.com/theban/memrange"

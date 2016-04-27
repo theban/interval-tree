@@ -1,4 +1,4 @@
-extern crate interval_tree;
+extern crate theban_interval_tree;
 extern crate rand;
 extern crate time;
 extern crate memrange;
@@ -11,7 +11,7 @@ use std::collections::BTreeSet;
 #[test]
 fn test_getters(){
     let data = 1337;
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(1,1), data);
     t.insert(Range::new(2,2), data+1);
     t.insert(Range::new(3,3), data+2);
@@ -25,7 +25,7 @@ fn test_getters(){
 #[test]
 fn test_contains(){
     let data = 1337;
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(1,1), data);
     t.insert(Range::new(2,2), data+1);
     t.insert(Range::new(3,3), data+2);
@@ -39,7 +39,7 @@ fn test_contains(){
 #[test]
 fn test_empty(){
     let data = 1337;
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     assert!(t.empty());
     t.insert(Range::new(1,1), data);
     t.insert(Range::new(2,2), data+1);
@@ -50,7 +50,7 @@ fn test_empty(){
 #[test]
 fn test_delete(){
     let data = 1337;
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(1,1), data);
     t.insert(Range::new(2,2), data+1);
     t.insert(Range::new(3,3), data+2);
@@ -71,7 +71,7 @@ fn test_delete(){
 
 #[test]
 fn test_perfomance(){
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     let data = 1337;
     let start = PreciseTime::now();
     for _ in 1..10000 {
@@ -100,7 +100,7 @@ fn test_perfomance(){
 
 #[test]
 fn test_min(){
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     assert!{t.min().is_none()};
     t.insert(Range::new(50,50), 1337);
     assert_eq!{t.min().expect("get 1 min"),(&Range::new(50,50),&1337)};
@@ -114,7 +114,7 @@ fn test_min(){
 
 #[test]
 fn test_iter(){
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(32,32),1337);
     t.insert(Range::new(34,34),1338);
     t.insert(Range::new(36,36),1339);
@@ -131,7 +131,7 @@ fn test_iter(){
 
 #[test]
 fn test_range_iter(){
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(32,32),1337);
     t.insert(Range::new(34,34),1338);
     t.insert(Range::new(36,36),1339);
@@ -149,7 +149,7 @@ fn test_range_iter(){
 
 #[test]
 fn test_range_iter_non_pointwise(){
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     t.insert(Range::new(3,8),1337);
     t.insert(Range::new(6,10),1338);
     t.insert(Range::new(12,36),1339);
@@ -172,7 +172,7 @@ fn random_range() -> Range {
 #[test]
 fn test_range_iter_nontrivial(){
     let mut set = BTreeSet::<Range>::new();
-    let mut t = interval_tree::IntervalTree::<i32>::new();
+    let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     for _ in 1..5000 {
         let decision = rand::random::<bool>();
         let range = random_range();
@@ -180,12 +180,12 @@ fn test_range_iter_nontrivial(){
             set.insert(range);
             t.insert(range, 1337);
             assert!(t.contains(range));
-            //assert!(t.test_interval_tree());
+            //assert!(t.test_theban_interval_tree());
         } else {
             set.remove(&range);
             t.delete(range);
             assert!(!t.contains(range));
-            //assert!(t.test_interval_tree());
+            //assert!(t.test_theban_interval_tree());
         };
     let query = random_range();
     let should = set.iter().filter(|&r| query.intersect(r)).collect::<Vec<&Range>>();
