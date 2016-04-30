@@ -123,7 +123,7 @@ fn test_iter(){
         let (k,v) = pair;
         println!("{:?}, {}",k,v);
         let key = (i as u64)*2 +32;
-        assert_eq!(k,&Range::new(key,key));
+        assert_eq!(k,Range::new(key,key));
         assert_eq!(v,&((i as i32)+1337));
     }
 
@@ -140,7 +140,7 @@ fn test_range_iter(){
         let (k,v) = pair;
         println!("{:?}, {}",k,v);
         let key = (i as u64)*2 +34;
-        assert_eq!(k,&Range::new(key,key));
+        assert_eq!(k,Range::new(key,key));
         assert_eq!(v,&((i as i32)+1338));
         assert!(i<2);
     }
@@ -154,7 +154,7 @@ fn test_range_iter_non_pointwise(){
     t.insert(Range::new(6,10),1338);
     t.insert(Range::new(12,36),1339);
     t.insert(Range::new(32,40),1340);
-    assert_eq!(t.range(9,14).map(|(&k,_)| k.min).collect::<Vec<u64>>(), vec![6,12])
+    assert_eq!(t.range(9,14).map(|(k,_)| k.min).collect::<Vec<u64>>(), vec![6,12])
 }
 
 fn random_range() -> Range {
@@ -188,8 +188,8 @@ fn test_range_iter_nontrivial(){
             //assert!(t.test_theban_interval_tree());
         };
     let query = random_range();
-    let should = set.iter().filter(|&r| query.intersect(r)).collect::<Vec<&Range>>();
-    let is = t.range(query.min, query.max).map(|(r,_)| r).collect::<Vec<&Range>>();
+    let should = set.iter().filter(|r| query.intersect(r) ).map(|&r| r.clone()).collect::<Vec<Range>>();
+    let is = t.range(query.min, query.max).map(|(r,_)| r).collect::<Vec<Range>>();
     assert_eq!(should, is);
     };
 }

@@ -1,6 +1,6 @@
 [package]
 name = "theban_interval_tree"
-version = "0.6.2"
+version = "0.7.0"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple Interval Tree implementation"

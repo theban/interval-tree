@@ -11,7 +11,6 @@ enum VisitingState {
 }
 
 pub struct RangePairIter<'a,D:'a> {
-    //tree: &'a tree::IntervalTree<D>,
     range: Range,
     stack: Vec<(&'a Node<D>, VisitingState)>
 }
@@ -73,10 +72,10 @@ impl<'a, D:'a> RangePairIter<'a, D> {
 
 impl<'a, D:'a> Iterator for RangePairIter<'a, D> {
 
-    type Item = (&'a Range,&'a D);
+    type Item = (Range,&'a D);
 
-    fn next(&mut self) -> Option<(&'a Range,&'a D)> {
-        self.get_next_node().map_or(None, |n| Some((&n.key, &n.data)))
+    fn next(&mut self) -> Option<(Range,&'a D)> {
+        self.get_next_node().map_or(None, |n| Some((n.key, &n.data)))
     }
 }
 
@@ -97,18 +96,18 @@ fn test_iterators(){
     }
 
     let mut iter = RangePairIter::new(&tree, 0, 1000);
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(1 ,1 ));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(3 ,3 ));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(10,10));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(13,13));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(17,17));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(18,18));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(1 ,1 ));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(3 ,3 ));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(10,10));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(13,13));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(17,17));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(18,18));
     assert!(iter.next().is_none());
 
     let mut iter = RangePairIter::new(&tree, 3, 17);
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(3 ,3 ));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(10,10));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(13,13));
-    assert_eq!(iter.next().expect("should have a few values").0, &Range::new(17,17));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(3 ,3 ));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(10,10));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(13,13));
+    assert_eq!(iter.next().expect("should have a few values").0, Range::new(17,17));
     assert!(iter.next().is_none());
 }
