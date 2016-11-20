@@ -1,5 +1,5 @@
-#![crate_type = "lib"]
-#![feature(test)]
+extern crate rand;
+extern crate memrange;
 
 mod node;
 pub mod tree;

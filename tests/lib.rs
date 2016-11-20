@@ -70,7 +70,7 @@ fn test_delete(){
 }
 
 #[test]
-fn test_perfomance(){
+fn test_performance(){
     let mut t = theban_interval_tree::IntervalTree::<i32>::new();
     let data = 1337;
     let start = PreciseTime::now();
@@ -95,7 +95,7 @@ fn test_perfomance(){
     }
     let end_2 = PreciseTime::now();
     let diff_full = start_2.to(end_2).num_milliseconds();
-    assert!(diff_full < diff_simple * 13); //log time 
+    assert!(diff_full < diff_simple * 13); //log time
 }
 
 #[test]
