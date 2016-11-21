@@ -1,9 +1,5 @@
-extern crate rand;
-extern crate test;
-extern crate memrange;
-
 use node::Node;
-use self::memrange::Range;
+use memrange::Range;
 use node::{insert,delete,search,min_pair, max_pair, height};
 use iterators::RangePairIter;
 
@@ -31,7 +27,7 @@ impl <D> IntervalTree<D>{
 /// ```
 /// extern crate memrange;
 /// extern crate theban_interval_tree;
-/// 
+///
 /// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// assert_eq!(t.get(memrange::Range::new(2,2)), Some(&25));
@@ -57,7 +53,7 @@ impl <D> IntervalTree<D>{
 /// t.delete(memrange::Range::new(2,2));
 /// assert!(t.empty());
 /// // deleting nonexistant keys doesn't do anything
-/// t.delete(memrange::Range::new(3,3)); 
+/// t.delete(memrange::Range::new(3,3));
 /// assert!(t.empty());
 /// ```
     pub fn delete(&mut self, key: Range){
@@ -125,7 +121,7 @@ impl <D> IntervalTree<D>{
 /// ```
 /// extern crate memrange;
 /// extern crate theban_interval_tree;
-/// 
+///
 /// let mut t=theban_interval_tree::IntervalTree::<i32>::new();
 /// assert!(t.empty());
 /// t.insert(memrange::Range::new(2,2),25);
@@ -140,7 +136,7 @@ impl <D> IntervalTree<D>{
 /// ```
 /// extern crate memrange;
 /// extern crate theban_interval_tree;
-/// 
+///
 /// let mut t=theban_interval_tree::IntervalTree::<u64>::new();
 /// t.insert(memrange::Range::new(2,2),25);
 /// t.insert(memrange::Range::new(3,3),50);
@@ -224,11 +220,8 @@ impl <D> IntervalTree<D>{
 }
 
 #[cfg(test)]
-mod tests{
-
-    extern crate rand;
-    extern crate test;
-    extern crate memrange;
+mod tests {
+    use {memrange, rand};
     use node::is_interval_tree;
 
     fn random_range() -> memrange::Range {
