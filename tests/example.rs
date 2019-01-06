@@ -26,11 +26,11 @@ fn main(){
 
     assert!(!t.contains(Range::new(1,1)));
 
-    for (i,pair) in t.iter().enumerate() {
+    for (_i, _pair) in t.iter().enumerate() {
         //[...]
     }
 
-    for (i,pair) in t.range(34, 36).enumerate() {
+    for (_i, _pair) in t.range(34, 36).enumerate() {
         //[...]
     }
 }
